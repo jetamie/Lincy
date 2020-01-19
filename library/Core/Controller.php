@@ -1,6 +1,8 @@
 <?php
 namespace library\Core;
 
+use library\Smarty\Handle as Smarty;
+
 abstract class Controller
 {
     /**
@@ -29,7 +31,7 @@ abstract class Controller
      */
     public function initModel()
     {
-        $model = str_replace("Controller","Model", static::class);
+        $model = str_replace('Controller','Model', static::class);
         $model = '\\app\\business\\Controller\\'.$model;
         if (!$this->_model) {
             if (class_exists($model)) {
@@ -37,5 +39,18 @@ abstract class Controller
             }
         }
         return $this->_model;
+    }
+
+    /**
+     * @return \Smarty|null
+     */
+    public function initSmarty()
+    {
+        if (!Smarty::$_flag) {
+            $view = str_replace('Controller','', static::class);
+            $viewPath = APP.'app/business/View/'.$view;
+            Smarty::setDefault($viewPath);
+        }
+        return Smarty::getSmarty();
     }
 }

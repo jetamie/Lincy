@@ -29,6 +29,7 @@ class Config implements \library\Config
         $res = '';
         (isset($arr[1])) && (isset($config[$arr[1]]) && $res = $config[$arr[1]]);
         (isset($arr[2])) && (isset($config[$arr[1]][$arr[2]]) && $res = $config[$arr[1]][$arr[2]]);
+        if (!$res) return $config;
         return $res;
     }
 
