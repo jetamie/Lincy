@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * 命名空间
+ * Class Autoloader
+ */
 class Autoloader
 {
     public static function loadClass($class)

@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * 正则分割
+ * Class Autoload
+ */
 class Autoload
 {
     private static $_dirList = [];
