@@ -16,9 +16,16 @@
 </head>
 <body>
     <div id="cont">
-        <h1 style="font-size: 3.5em">{$msg}</h1>
-        <p>
-
+        <h1 style="font-size: 3em">{$msg}</h1>
+        <a style="font-size: 1.2em" href="{$github}">
+            {$github}
+        </a>
+        <p style="font-size: 1.1em">
+            目前刚开始建设可能存在较多bug和以及性能低下，需要不断完善
+        </p>
+        <p style="font-size: 1.2em">
+            QQ:1341514258
+            群：543558459
         </p>
     </div>
 </body>
