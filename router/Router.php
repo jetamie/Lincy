@@ -1,6 +1,6 @@
 <?php
 namespace router;
-use Vendor\router\Router as Route;
+use vendor\router\Router as Route;
 
 class Router
 {
