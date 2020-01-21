@@ -7,6 +7,14 @@ class indexController extends Controller
 {
     public function index()
     {
-        return $this->_params;
+        $this->assign('msg','Hello Lincy!');
+        $this->assign('github','https://github.com/jetamie/Lincy');
+        $this->display('index.tpl');
+    }
+    public function api()
+    {
+        return [
+            'msg' => 'Hello Lincy!'
+        ];
     }
 }

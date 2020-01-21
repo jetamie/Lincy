@@ -4,6 +4,6 @@
  */
 use router\Router;
 Router::init();
-Router::get('/index/index/:name?', '/index/index');
-Router::get('/app/index/:id/:name?', '/index/index');
+Router::get('/index/index/', '/index/index');
+Router::get('/v1/api', '/index/api');
 Router::handle();

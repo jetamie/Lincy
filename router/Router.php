@@ -1,6 +1,6 @@
 <?php
 namespace router;
-use Vendor\router\Router as Route;
+use vendor\router\Router as Route;
 
 class Router
 {
@@ -91,7 +91,9 @@ class Router
                 $obj = new $className();
                 $obj->init($params);
                 $data = $obj->$method();
-                echo json_encode($data);
+                if ($data != null && $data != false && $data != '') {
+                    echo json_encode($data);
+                }
                 return;
             } else {
                 exit('方法不存在');
