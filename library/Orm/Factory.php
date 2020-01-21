@@ -14,6 +14,13 @@ class Factory
     private static $_mongo;
     public static function getMysqlInstance($config = 'system.mysql')
     {
+        if (!self::$_mysql) {
+            $conf = Config::get($config);
+            if ($conf) {
+                $table = new Table(new Mysql('',''));
+                self::$_mysql = $table->getAdapter();
+            }
+        }
         return self::$_mysql;
     }
 
@@ -32,6 +39,13 @@ class Factory
 
     public static function getMongoInstance($config = 'system.mongo')
     {
+        if (!self::$_mongo) {
+            $conf = Config::get($config);
+            if ($conf) {
+                $table = new Table(new Mongo('',''));
+                self::$_mongo = $table->getAdapter();
+            }
+        }
         return self::$_mongo;
     }
 }

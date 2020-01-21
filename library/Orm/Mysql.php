@@ -4,7 +4,7 @@
 namespace library\Orm;
 
 
-class Mongo implements Db
+class Mysql implements Db
 {
     private $_link = null;
 
