@@ -3,6 +3,6 @@
 
 ### 现状
 
-脚本与web分离，任务用脚本操作，参数路由同web
-脚本入口:根目录lincy-cli.php
-web入口:public/index.php(nginx、Apache等服务器不要额外隐藏index.php路由)
+- 脚本与web分离，任务用脚本操作，参数路由同web
+- 脚本入口:根目录lincy-cli.php
+- web入口:public/index.php(nginx、Apache等服务器不要额外隐藏index.php路由)
