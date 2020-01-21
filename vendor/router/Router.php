@@ -1,7 +1,7 @@
 <?php
-namespace Vendor\router;
+namespace vendor\router;
 
-use Vendor\router\Route;
+use vendor\router\Route;
 
 /**
  * Route类的管理容器
