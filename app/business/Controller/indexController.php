@@ -7,17 +7,13 @@ class indexController extends Controller
 {
     public function index()
     {
-        return $this->_params;
+        $this->assign('msg','Hello Lincy!');
+        $this->display('index.tpl');
     }
-
-    public function test()
+    public function api()
     {
-        $s = $this->initSmarty();
-        $s->assign('test','test');
-        try {
-            $s->display('test.tpl');
-        } catch (\Exception $e) {
-            var_dump($e);
-        }
+        return [
+            'msg' => 'Hello Lincy!'
+        ];
     }
 }

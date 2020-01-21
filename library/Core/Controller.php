@@ -16,6 +16,11 @@ abstract class Controller
      */
     protected $_params = [];
 
+    /**
+     * @var Smarty
+     */
+    protected $_smarty = null;
+
 
     /**
      * 初始化
@@ -24,6 +29,10 @@ abstract class Controller
     public function init($params)
     {
         $this->_params = $params;
+        if (!$this->_smarty) {
+            $this->_smarty = new Smarty();
+        }
+        $this->initSmarty();
     }
 
     /**
@@ -42,15 +51,42 @@ abstract class Controller
     }
 
     /**
-     * @return \Smarty|null
+     * 初始化Smarty
      */
     public function initSmarty()
     {
-        if (!Smarty::$_flag) {
-            $view = str_replace('Controller','', static::class);
-            $viewPath = APP.'app/business/View/'.$view;
-            Smarty::setDefault($viewPath);
+        $view = explode('\\', static::class);
+        $len = count($view);
+        $view[$len-2] = 'View';
+        $view[$len-1] = str_replace('Controller', '', $view[$len-1]);
+        $viewPath = APP.implode('\\', $view).'/';
+        $this->_smarty->setDefault($viewPath);
+    }
+
+    /**
+     * assign-Smarty
+     * @param $tal_var
+     * @param null $value
+     * @param bool $nocache
+     */
+    public function assign($tal_var, $value = null, $nocache = false)
+    {
+        $this->_smarty->getSmarty()->assign($tal_var, $value, $nocache);
+    }
+
+    /**
+     * display-Smarty
+     * @param null $template
+     * @param null $cache_id
+     * @param null $compile_id
+     * @param null $parent
+     */
+    public function display($template = null, $cache_id = null, $compile_id = null, $parent = null)
+    {
+        try {
+            $this->_smarty->getSmarty()->display($template, $cache_id, $compile_id, $parent);
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
         }
-        return Smarty::getSmarty();
     }
 }
