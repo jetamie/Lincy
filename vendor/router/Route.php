@@ -1,5 +1,5 @@
 <?php
-namespace Vendor\router;
+namespace vendor\router;
 
 class Route
 {
