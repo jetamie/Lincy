@@ -236,6 +236,18 @@ class Helper
         }
         return $realIp;
     }
+
+    /**
+     * 伪造ip
+     * @return string
+     */
+    public static function getRandIp()
+    {
+        $arr = range(1, 255);
+        $randArr = array_rand($arr, 4);
+        shuffle($randArr);
+        return $randArr[0].'.'.$randArr[1].'.'.$randArr[2].'.'.$randArr[3];
+    }
     /**
      *获取设备
      */
@@ -271,17 +283,27 @@ class Helper
      * 说明：$url为链接，$post为字符串(例:"a=22&b=44")
      * @param $url
      * @param string $post
+     * @param $ip
      * @return bool|string
      */
-    public static function curlGet($url, $post='')
+    public static function curlGet($url, $ip='', $post='')
     {
+        $header = [
+            'Accept: application/json, text/javascript, */*; q=0.01',
+            'Accept-Encoding: gzip, deflate',
+            'Accept-Language: zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7',
+            'Connection: keep-alive',
+            'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)".
+                        " Chrome/70.0.3538.102 Safari/537.36',
+        ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        /*curl_setopt($ch, CURLOPT_USERAGENT, _USERAGENT_);
-        curl_setopt($ch, CURLOPT_REFERER, _REFERER_);*/
+        curl_setopt($ch, CURLOPT_HEADER, $header);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        if ($ip) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-FORWARDED-FOR:'.$ip,'CLIENT-IP:'.$ip]);
+        }
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, urlencode($post));
