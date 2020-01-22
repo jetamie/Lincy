@@ -31,8 +31,8 @@ class Factory
             $conf = Config::get($config);
             if ($conf) {
                 self::$_redis = new \Redis();
-                self::$_redis->connect($conf["redis"]["host"],$conf["redis"]["port"]);
-                self::$_redis->auth($conf["redis"]["pass"]);
+                self::$_redis->connect($conf["host"],$conf["port"]);
+                self::$_redis->auth($conf["pass"]);
             }
         }
         return self::$_redis;

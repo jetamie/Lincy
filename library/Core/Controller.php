@@ -40,8 +40,11 @@ abstract class Controller
      */
     public function initModel()
     {
-        $model = str_replace('Controller','Model', static::class);
-        $model = '\\app\\business\\Controller\\'.$model;
+        $model = explode('\\', static::class);
+        $len = count($model);
+        $model[$len-2] = 'Model';
+        $model[$len-1] = str_replace('Controller', 'Model', $model[$len-1]);
+        $model = implode('\\', $model);
         if (!$this->_model) {
             if (class_exists($model)) {
                 $this->_model = new $model();
