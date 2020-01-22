@@ -3,8 +3,9 @@
 
 namespace package;
 
+use library\Config as IConfig;
 
-class Config implements \library\Config
+class Config implements IConfig
 {
     /**
      * 默认路径

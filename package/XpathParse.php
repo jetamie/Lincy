@@ -1,15 +1,11 @@
 <?php
 namespace package;
 /**
+ * xpath解析数据
  * Class CatchWeb
  */
-class CatchWeb
+class XpathParse
 {
-    /**
-     * 股票代码
-     * @var string
-     */
-    private $_code;
     /**
      * @var \DOMComment
      */
@@ -49,7 +45,7 @@ class CatchWeb
         $domObj = self::getDomDocumentInstance();
         $domObj->loadHTML($html);
         $domObj->normalize();
-        $xpathObj = new DOMXPath($domObj);
+        $xpathObj = new \DOMXPath($domObj);
         if (!$xpathObj || !$url || !$conf) {
             return [];
         }
@@ -74,12 +70,12 @@ class CatchWeb
 
     /**
      * 单例模式
-     * @return DOMDocument
+     * @return \DOMDocument
      */
     public static function getDomDocumentInstance()
     {
         if (!self::$_domObj) {
-            self::$_domObj = new DOMDocument();
+            self::$_domObj = new \DOMDocument();
         }
         return self::$_domObj;
     }
