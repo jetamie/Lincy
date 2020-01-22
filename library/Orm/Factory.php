@@ -14,14 +14,15 @@ class Factory
     private static $_mongo;
     public static function getMysqlInstance($config = 'system.mysql')
     {
-        if (!self::$_mysql) {
-            $conf = Config::get($config);
-            if ($conf) {
-                $table = new Table(new Mysql('',''));
+        try {
+            if (!self::$_mysql) {
+                $table = new Table(new Mysql($config));
                 self::$_mysql = $table->getAdapter();
             }
+            return self::$_mysql;
+        } catch (\Exception $e) {
+            die($e->getMessage());
         }
-        return self::$_mysql;
     }
 
     public static function getRedisInstance($config = 'system.redis')

@@ -16,4 +16,16 @@ class Helper
         }
         $m->handle();
     }
+
+    /**
+     * 检查数据深度
+     * @param $array
+     * @param $limit
+     */
+    public static function CheckPool(&$array,$limit = 10)
+    {
+        if (count($array) > $limit) {
+            array_shift($array);
+        }
+    }
 }

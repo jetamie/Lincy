@@ -66,4 +66,9 @@ interface Db
      * @return mixed
      */
     public function find();
+
+    /**
+     * @return \mysqli
+     */
+    public function getConnect();
 }
