@@ -1,5 +1,5 @@
 <?php
-namespace library;
+namespace router\console;
 /**
  * 路由器-通过正则匹配路由方式
  * Class Router

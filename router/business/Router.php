@@ -1,5 +1,5 @@
 <?php
-namespace router;
+namespace router\business;
 use vendor\router\Router as Route;
 
 class Router

@@ -7,4 +7,4 @@ require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'Bootstrap.php';
 //模板引擎
 include_once APP . 'vendor/smarty/bootstrap.php';
 //web路由
-include_once APP.'router/route.php';
+include_once APP . 'router/business/route.php';

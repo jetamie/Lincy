@@ -2,7 +2,7 @@
 /**
  * 当前为脚本控制器入口
  */
-use library\Router;
+use router\console\Router;
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "Bootstrap.php";
 Router::dispatch($argv, false);
