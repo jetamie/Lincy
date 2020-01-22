@@ -67,8 +67,5 @@ interface Db
      */
     public function find();
 
-    /**
-     * @return \mysqli
-     */
     public function getConnect();
 }

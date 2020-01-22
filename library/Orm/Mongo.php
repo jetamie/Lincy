@@ -106,4 +106,9 @@ class Mongo implements Db
     {
         // TODO: Implement find() method.
     }
+
+    public function getConnect()
+    {
+        // TODO: Implement getConnect() method.
+    }
 }

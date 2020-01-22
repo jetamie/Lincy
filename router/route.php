@@ -2,8 +2,8 @@
 /**
  * 路由寻址文件
  */
+$router = require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
 use router\Router;
 Router::init();
-Router::get('/index/index/', '/index/index');
-Router::get('/v1/api', '/index/api');
+Router::parseRouter($router);
 Router::handle();
