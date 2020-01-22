@@ -14,7 +14,15 @@ class Factory
     private static $_mongo;
     public static function getMysqlInstance($config = 'system.mysql')
     {
-        return self::$_mysql;
+        try {
+            if (!self::$_mysql) {
+                $table = new Table(new Mysql($config));
+                self::$_mysql = $table->getAdapter();
+            }
+            return self::$_mysql;
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     public static function getRedisInstance($config = 'system.redis')
@@ -32,6 +40,13 @@ class Factory
 
     public static function getMongoInstance($config = 'system.mongo')
     {
+        if (!self::$_mongo) {
+            $conf = Config::get($config);
+            if ($conf) {
+                $table = new Table(new Mongo('',''));
+                self::$_mongo = $table->getAdapter();
+            }
+        }
         return self::$_mongo;
     }
 }

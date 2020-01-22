@@ -4,19 +4,21 @@
 namespace library\Orm;
 
 
-class Mongo implements Db
+use package\Config;
+use package\Helper;
+
+class Mysql implements Db
 {
     private $_link = null;
 
-    private $_dbName = '';
+    private static $_conn = [];
 
-    public function __construct($link, $dbName)
+    public function __construct($link)
     {
-        if (empty($link) || empty($dbName)) {
-            throw new \Exception('链接或者数据库为空!');
+        if (empty($link)) {
+            throw new \Exception('链接为空!');
         }
         $this->_link = $link;
-        $this->_dbName = $dbName;
     }
 
     /**
@@ -107,8 +109,25 @@ class Mongo implements Db
         // TODO: Implement find() method.
     }
 
+    /**
+     * @return \mysqli
+     * @throws \Exception
+     */
     public function getConnect()
     {
         // TODO: Implement getConnect() method.
+        //检查深度
+        Helper::CheckPool(self::$_conn);
+        //复用链接
+        if (!self::$_conn[$this->_link]) {
+            $conf = Config::get($this->_link);
+            $conn = mysqli_connect($conf['host'], $conf['user'], $conf['password'], $conf['dbname'], $conf['port']);
+            mysqli_set_charset($conn, isset($conf['charset'])?:'utf8');
+            if (!$conn) {
+                throw new \Exception(mysqli_connect_error());
+            }
+            self::$_conn[$this->_link] = $conn;
+        }
+        return self::$_conn[$this->_link];
     }
 }

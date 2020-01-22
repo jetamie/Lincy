@@ -1,5 +1,5 @@
 <?php
-namespace library;
+namespace router\console;
 /**
  * 路由器-通过正则匹配路由方式
  * Class Router
@@ -8,11 +8,12 @@ class Router
 {
     /**
      * @param $param
+     * @param $debug
      * @return void (Controller|Model)
      */
-    public static function dispatch($param)
+    public static function dispatch($param, $debug = false)
     {
-        self::_init();
+        self::_init($debug);
         if (isset($param[1]) && $param[1]) {
             $class = explode("/", $param[1]);
             $className = '\\app\\console\\Controller\\'.$class[0]."Console";
@@ -39,10 +40,11 @@ class Router
 
     /**
      * url router
+     * @param $debug
      */
-    public static function request()
+    public static function request($debug = false)
     {
-        self::_init();
+        self::_init($debug);
         $param = $_SERVER['PHP_SELF'];
         $param = explode("/", $param);
         array_shift($param);
@@ -74,10 +76,11 @@ class Router
 
     /**
      * 初始化操作
+     * @param $debug
      */
-    private static function _init()
+    private static function _init($debug = true)
     {
-        if (DEBUG) {
+        if ($debug) {
             ini_set("display_errors", true);
             error_reporting(E_ALL);
         } else {

@@ -15,4 +15,3 @@ set_include_path(
 );
 require_once APP . 'Autoloader.php'; 
 Autoloader::load();
-include_once APP . 'vendor/smarty/bootstrap.php';

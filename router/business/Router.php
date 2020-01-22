@@ -1,5 +1,5 @@
 <?php
-namespace router;
+namespace router\business;
 use vendor\router\Router as Route;
 
 class Router
@@ -127,5 +127,26 @@ class Router
         $param = $_SERVER['PHP_SELF'];
         $self = str_replace('/index.php', '', $param);
         return $self;
+    }
+
+    /**
+     * 解析路由文件
+     * @param $config
+     */
+    public static function parseRouter($config)
+    {
+        if (empty($config) || !is_array($config)) {
+            self::get('/index/index', '/index/index');
+        }
+        try {
+            foreach ($config as $method => $map) {
+                foreach ($map as $uri => $act) {
+                    $method = strtolower($method);
+                    self::$method($uri, $act);
+                }
+            }
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
     }
 }
