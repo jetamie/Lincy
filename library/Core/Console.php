@@ -48,8 +48,11 @@ abstract class Console
      */
     public function initModel()
     {
-        $model = str_replace("Console","Model", static::class);
-        $model = '\\app\\console\\Model\\'.$model;
+        $model = explode('\\', static::class);
+        $len = count($model);
+        $model[$len-2] = 'Model';
+        $model[$len-1] = str_replace('Console', 'Model', $model[$len-1]);
+        $model = implode('\\', $model);
         if (!$this->_model) {
             if (class_exists($model)) {
                 $this->_model = new $model();
