@@ -6,5 +6,8 @@ namespace library\Core;
  */
 abstract class Model
 {
-
+    /**
+     * 需要重载方法
+     */
+    public function run(){}
 }
