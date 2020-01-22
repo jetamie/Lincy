@@ -299,10 +299,12 @@ class Helper
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, $header);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
         if ($ip) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-FORWARDED-FOR:'.$ip,'CLIENT-IP:'.$ip]);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge($header,['X-FORWARDED-FOR:'.$ip,'CLIENT-IP:'.$ip]));
         }
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, 1);
