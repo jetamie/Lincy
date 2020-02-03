@@ -1,5 +1,6 @@
 <?php
 namespace router\business;
+use library\Core\Controller;
 use vendor\router\Router as Route;
 
 class Router
@@ -8,6 +9,10 @@ class Router
      * @var Route
      */
     private static $_route = null;
+    /**
+     * @var Controller[]
+     */
+    private static $_container = [];
 
 
     public static function init()
@@ -41,6 +46,18 @@ class Router
     public static function post($uri, $action, $name=null)
     {
         self::$_route->post($uri,$action, $name);
+    }
+
+    /**
+     * 自定义协议
+     * @param $uri
+     * @param $action
+     * @param $name
+     * @param string $method
+     */
+    public static function add($uri,$action, $name, $method = 'GET')
+    {
+        self::$_route->add($uri,$action, $name, $method);
     }
 
     /**
@@ -86,20 +103,26 @@ class Router
         $className = isset($param[0])&&$param[0]?lcfirst($param[0])."Controller":"indexController";
         $method = isset($param[1])&&$param[1]?lcfirst($param[1]):"index";
         $className = '\\app\\business\\Controller\\'.$className;
-        if (class_exists($className)) {
-            if (method_exists($className, $method)) {
-                $obj = new $className();
-                $obj->init($params);
-                $data = $obj->$method();
-                if ($data != null && $data != false && $data != '') {
-                    echo json_encode($data);
-                }
-                return;
-            } else {
-                exit('方法不存在');
-            }
+        //增加缓存器
+        if (isset(self::$_container[$className])) {
+            $obj = self::$_container[$className];
         } else {
-            exit('控制器不存在');
+            if (class_exists($className)) {
+                if (method_exists($className, $method)) {
+                    $obj = new $className();
+                    self::$_container[$className] = $obj;
+                } else {
+                    exit('方法不存在');
+                }
+            } else {
+                exit('控制器不存在');
+            }
+        }
+        //执行方法
+        $obj->init($params);
+        $data = $obj->$method();
+        if ($data != null && $data != false && $data != '') {
+            echo json_encode($data);
         }
     }
 
