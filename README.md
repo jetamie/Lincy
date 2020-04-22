@@ -8,4 +8,4 @@
 - web入口:public/index.php(nginx、Apache等服务器不要额外隐藏index.php路由)
 
 ### 更新记录
-- 新增电影demo
+- 新增电影demo(beta分支)
