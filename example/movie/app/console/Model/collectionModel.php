@@ -84,8 +84,15 @@ class collectionModel extends Model
        //缓存列表
        $key = self::TYPE_LIST_PAGE_KEY_PRE.$type;
        $data = unserialize($this->initRedis()->get($key));
+       //跳过证书验证
+       $stream_opts = [
+           "ssl" => [
+               "verify_peer"=>false,
+               "verify_peer_name"=>false,
+           ]
+       ];
        if (!$data) {
-           $res = file_get_contents($url);
+           $res = file_get_contents($url, false, stream_context_create($stream_opts));
            $data = @json_decode($res, true);
            $this->initRedis()->set($key, serialize($data), 3600*24);
        }
@@ -95,7 +102,7 @@ class collectionModel extends Model
        for ($i = $page;$i <= $pageCount; $i++) {
            $detailUrl = $url.'&pg='.$i;
            $this->echoLog('start request:'.$detailUrl);
-           $res = file_get_contents($detailUrl);
+           $res = file_get_contents($detailUrl, false, stream_context_create($stream_opts));
            $tmpList = @json_decode($res, true);
            if (!isset($tmpList['list'])) continue;
            foreach ($tmpList['list'] as $item) {
