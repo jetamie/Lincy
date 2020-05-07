@@ -68,4 +68,6 @@ interface Db
     public function find();
 
     public function getConnect();
+
+    public function close();
 }

@@ -31,8 +31,8 @@ class Factory
             $conf = Config::get($config);
             if ($conf) {
                 self::$_redis = new \Redis();
-                self::$_redis->connect($conf["host"],$conf["port"]);
-                self::$_redis->auth($conf["pass"]);
+                self::$_redis->connect($conf['host'],$conf['port']);
+                self::$_redis->auth($conf['pass']);
             }
         }
         return self::$_redis;
@@ -43,7 +43,12 @@ class Factory
         if (!self::$_mongo) {
             $conf = Config::get($config);
             if ($conf) {
-                $table = new Table(new Mongo('',''));
+                try {
+                    $link = new \MongoClient('mongodb://'.$conf['host'].':'.$conf['port']);
+                    $table = new Table(new Mongo($link));
+                } catch (\Exception $e) {
+                    throw $e;
+                }
                 self::$_mongo = $table->getAdapter();
             }
         }

@@ -130,4 +130,9 @@ class Mysql implements Db
         }
         return self::$_conn[$this->_link];
     }
+
+    public function close()
+    {
+        // TODO: Implement close() method.
+    }
 }
