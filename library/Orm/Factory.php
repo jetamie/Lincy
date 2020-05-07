@@ -12,6 +12,7 @@ class Factory
     private static $_redis;
     private static $_mysql;
     private static $_mongo;
+    private static $_mongo7;
     public static function getMysqlInstance($config = 'system.mysql')
     {
         try {
@@ -53,5 +54,22 @@ class Factory
             }
         }
         return self::$_mongo;
+    }
+
+    public static function getMongo7Instance($config = 'system.mongo')
+    {
+        if (!self::$_mongo7) {
+            $conf = Config::get($config);
+            if ($conf) {
+                try {
+                    $link = new \MongoDB\Driver\Manager('mongodb://'.$conf['host'].':'.$conf['port']);
+                    $table = new Table(new Mongo($link));
+                } catch (\Exception $e) {
+                    throw $e;
+                }
+                self::$_mongo7 = $table->getAdapter();
+            }
+        }
+        return self::$_mongo7;
     }
 }
